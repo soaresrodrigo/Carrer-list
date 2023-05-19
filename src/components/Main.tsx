@@ -6,9 +6,11 @@ import Post from './Post';
 import { createCarrer, getCarrers } from './core/client';
 import { FormEvent, useEffect, useState } from 'react';
 import { Carrer } from './core/interfaces';
+import { useSelector } from 'react-redux';
 
 const Main = () => {
     const [carrers, setCarrers] = useState<Carrer[] | null>(null);
+    const user = useSelector((state: any) => state.user);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,7 +30,7 @@ const Main = () => {
     const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         const values = extractValues(ev.target as HTMLFormElement);
-        values['username'] = 'Laís';
+        values['username'] = user.username;
 
         const fecthPost = async() => {
             const data = await createCarrer(values);

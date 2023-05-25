@@ -8,7 +8,7 @@ const initialState: RootState = {
     username: ''
 };
 
-const user = createSlice({
+const slice = createSlice({
     name: 'signup/username',
     initialState,
     reducers: {
@@ -18,5 +18,5 @@ const user = createSlice({
     }
 })
 
-export const { setUsername } = user.actions;
-export default user.reducer;
+export const { setUsername } = slice.actions;
+export default slice.reducer;

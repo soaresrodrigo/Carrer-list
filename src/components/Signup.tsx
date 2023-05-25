@@ -15,6 +15,7 @@ const Signup = () => {
     const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         const values: FormValues = extractValues(ev.target as HTMLFormElement);
+        localStorage.setItem('userName', values.name);
         dispatch(setUsername(values.name));
     };
 

@@ -1,3 +1,5 @@
+import { ICreateArticle } from "@src/components/core/interfaces";
+
 const headersConfig = () => {
     return new Headers({
         'Content-Type': 'application/json'
@@ -16,7 +18,7 @@ const prepareUrl = async (params?: []) => {
 }
 
 
-export const getCarrers = async (params?: []) => {
+export const listArticles = async (params?: []) => {
     const url: string = await prepareUrl(params);
 
     const data = await fetch(url, {
@@ -28,7 +30,7 @@ export const getCarrers = async (params?: []) => {
 
 }
 
-export const createCarrer = async (formData: any) => {
+export const storeArticle = async (formData: ICreateArticle) => {
     const url: string = await prepareUrl();
 
     const data = await fetch(url, {

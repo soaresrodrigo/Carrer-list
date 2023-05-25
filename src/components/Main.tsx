@@ -3,46 +3,22 @@ import { LayoutColors, LayoutFonts, extractValues } from './core/commom';
 import { ButtonForm, Card, Form } from './core/appStyled';
 import FormPost from './FormPost';
 import Post from './Post';
-import { createCarrer, getCarrers } from './core/client';
-import { FormEvent, useEffect, useState } from 'react';
-import { Carrer } from './core/interfaces';
-import { useSelector } from 'react-redux';
+import { FormEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Article } from './core/interfaces';
+import { createArticle } from '@src/redux/articles';
 
 const Main = () => {
-    const [carrers, setCarrers] = useState<Carrer[] | null>(null);
+    
+    const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getCarrers();
-
-            if(data) {
-                setCarrers(data.results);
-            }
-        };
-
-        if (!carrers) {
-            fetchData();
-        }
-
-    }, [carrers]);
+    const articles: Article[] = useSelector((state: any) => state.articles.data);
 
     const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
         const values = extractValues(ev.target as HTMLFormElement);
         values['username'] = user.username;
-
-        const fecthPost = async() => {
-            const data = await createCarrer(values);
-
-            console.log(data);
-        }
-
-        fecthPost();
-
-        console.log(values);
-        
-        
+        dispatch(createArticle(values));
     };
 
     return (
@@ -57,8 +33,8 @@ const Main = () => {
                     </Form>
                 </Card>
 
-                {carrers && carrers.map((carrer, index) => (
-                    <Post carrer={carrer} key={index} />
+                {articles && articles.map((article: Article, index: number) => (
+                    <Post article={article} key={index} />
                 ))}
 
             </Content>

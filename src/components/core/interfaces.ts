@@ -1,8 +1,10 @@
-
-export interface Carrer {
+export interface Article extends ICreateArticle {
     id: number,
-    username: string,
     created_datetime: string,
-    title: string,
-    content: string
+}
+
+export interface ICreateArticle {
+    username: string;
+    title: string;
+    content: string;
 }

@@ -2,28 +2,40 @@ import styled from 'styled-components';
 import { LayoutColors, LayoutFonts } from './core/commom';
 import DeleteIcon from '@src/components/assets/icons/delete.svg';
 import EditIcon from '@src/components/assets/icons/edit.svg';
-import { Carrer } from './core/interfaces';
+import { Article } from './core/interfaces';
+import { useDispatch, useSelector } from 'react-redux';
+import { modalType, setCurrentModal } from '@src/redux/modal';
 
 interface IPost {
-    carrer: Carrer
+    article: Article
 }
 
-const Post = ({ carrer }: IPost) => {
+const Post = ({ article }: IPost) => {
+
+    const dispatch = useDispatch();
+    const user = useSelector((state: any) => state.user);
+
+    const handleOpenModal = (modal: modalType, id: number) => {
+        dispatch(setCurrentModal({ currentModal: modal, idArticle: id }));
+    }
+
     return (
         <Article>
             <HeaderArticle>
-                <TitleArticle>{carrer.title}</TitleArticle>
-                <ActionArticle>
-                    <IconAction src={DeleteIcon} />
-                    <IconAction src={EditIcon} />
-                </ActionArticle>
+                <TitleArticle>{article.title}</TitleArticle>
+                {article.username === user.username && (
+                    <ActionArticle>
+                        <IconAction src={DeleteIcon} onClick={() => handleOpenModal('delete', article.id)} />
+                        <IconAction src={EditIcon} onClick={() => handleOpenModal('edit', article.id)} />
+                    </ActionArticle>
+                )}
             </HeaderArticle>
             <Section>
                 <Info>
-                    <User>{carrer.username}</User>
-                    <Time>{convertDateToTimeAgo(carrer.created_datetime)}</Time>
+                    <User>{article.username}</User>
+                    <Time>{convertDateToTimeAgo(article.created_datetime)}</Time>
                 </Info>
-                <Content>{carrer.content}</Content>
+                <Content>{article.content}</Content>
             </Section>
         </Article>
     )

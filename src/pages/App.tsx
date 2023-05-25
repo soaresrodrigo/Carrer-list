@@ -1,8 +1,11 @@
 import Main from '@src/components/Main';
+import Modal from '@src/components/Modal';
 import Signup from '@src/components/Signup';
 import '@src/components/assets/scss/reset.scss';
+import { getArticles } from '@src/redux/articles';
+import { setUsername } from '@src/redux/user';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 export const SIGNUP = 'signup';
@@ -10,8 +13,22 @@ export const MAIN = 'main';
 
 function App() {
 
+  const dispatch = useDispatch();
   const [mode, setMode] = useState(SIGNUP);
   const user = useSelector((state: any) => state.user);
+  const userName = localStorage.getItem('userName');
+
+  useEffect(() => {
+    dispatch(getArticles());
+  }, [])
+
+  useEffect(() => {
+    if (userName) {
+      dispatch(setUsername(userName));
+    }
+
+  }, [userName]);
+
 
   useEffect(() => {
     if (user.username) {
@@ -21,6 +38,10 @@ function App() {
 
   return (
     <Container>
+      {/* show modal */}
+      <Modal />
+
+      {/* Show application */}
       {(() => {
         switch (mode) {
           case SIGNUP:
@@ -31,6 +52,7 @@ function App() {
             return null;
         }
       })()}
+
     </Container>
   );
 }

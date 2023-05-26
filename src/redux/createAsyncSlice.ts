@@ -13,7 +13,7 @@ const initialState: RootState<any> = {
     error: null,
 };
 
-interface PropsConfig<T> {
+export interface PropsConfig<T> {
     name: string;
     initialState?: RootState<T>;
     reducers?: {
@@ -48,11 +48,11 @@ const createAsyncSlice = <T>(config: PropsConfig<T>) => {
 
     const {fetchStarted, fetchSuccess, fetchError} = slice.actions;
 
-    const asyncAction: any = (payload: Promise<any>) => async(dispatch: AppDispatch) => {
+    const asyncAction: any = (payload: Promise<T>) => async(dispatch: AppDispatch) => {
 
         try {
             dispatch(fetchStarted());
-            const data =  await payload;
+            const data: T =  await payload;
             return dispatch(fetchSuccess(data))
         } catch (error) {
             return dispatch(fetchError('Algo deu ruim'))

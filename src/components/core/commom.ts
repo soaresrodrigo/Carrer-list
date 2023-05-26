@@ -19,16 +19,3 @@ export const LayoutFonts = {
     fontButton: `normal normal 700 normal 16px/19px ${fontFamilyPrimary}`,
     fontInfo: `normal normal 400 normal 18px/21px ${fontFamilyPrimary}`,
 };
-
-
-export const extractValues = (form: HTMLFormElement): any => {
-    const data = new FormData(form);
-    const values: any = {};
-
-    for(let entry of data.entries()){
-        const [key, value] = entry;
-        values[key] = value;
-    }
-
-    return values;
-}

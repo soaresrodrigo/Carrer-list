@@ -2,7 +2,9 @@ import Main from '@src/components/Main';
 import Modal from '@src/components/Modal';
 import Signup from '@src/components/Signup';
 import '@src/components/assets/scss/reset.scss';
+import { APIArticles } from '@src/components/core/interfaces';
 import { getArticles } from '@src/redux/articles';
+import { setLoadingArticle } from '@src/redux/updateArticles';
 import { setUsername } from '@src/redux/user';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,10 +19,13 @@ function App() {
   const [mode, setMode] = useState(SIGNUP);
   const user = useSelector((state: any) => state.user);
   const userName = localStorage.getItem('userName');
-
+  const articles: APIArticles = useSelector((state: any) => state.articles.data);
+  const updateArticles = useSelector((state: any) => state.updateArticles);
+  
   useEffect(() => {
     dispatch(getArticles());
-  }, [])
+    dispatch(setLoadingArticle(false));
+  }, [updateArticles])
 
   useEffect(() => {
     if (userName) {
@@ -47,7 +52,7 @@ function App() {
           case SIGNUP:
             return <Signup />;
           case MAIN:
-            return <Main />
+            return <Main articles={articles} />
           default:
             return null;
         }

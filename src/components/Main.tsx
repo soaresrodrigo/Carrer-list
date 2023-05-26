@@ -1,25 +1,15 @@
 import styled from 'styled-components';
-import { LayoutColors, LayoutFonts, extractValues } from './core/commom';
-import { ButtonForm, Card, Form } from './core/appStyled';
+import { LayoutColors, LayoutFonts } from './core/commom';
+import { Card } from './core/appStyled';
 import FormPost from './FormPost';
 import Post from './Post';
-import { FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Article } from './core/interfaces';
-import { createArticle } from '@src/redux/articles';
+import { APIArticles } from './core/interfaces';
 
-const Main = () => {
-    
-    const dispatch = useDispatch();
-    const user = useSelector((state: any) => state.user);
-    const articles: Article[] = useSelector((state: any) => state.articles.data);
+interface MainProps {
+    articles: APIArticles;
+}
 
-    const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
-        ev.preventDefault();
-        const values = extractValues(ev.target as HTMLFormElement);
-        values['username'] = user.username;
-        dispatch(createArticle(values));
-    };
+const Main = ({ articles }: MainProps) => {
 
     return (
         <Container>
@@ -27,15 +17,12 @@ const Main = () => {
             <Content>
                 <Card>
                     <TitleFormH2>What’s on your mind?</TitleFormH2>
-                    <Form onSubmit={handleSubmit}>
-                        <FormPost />
-                        <ButtonForm type="submit">Create</ButtonForm>
-                    </Form>
+                    <FormPost formType={'post'} />
                 </Card>
 
-                {articles && articles.map((article: Article, index: number) => (
+                {articles && articles.results ? articles.results.map((article, index) => (
                     <Post article={article} key={index} />
-                ))}
+                )) : <></>}
 
             </Content>
         </Container>

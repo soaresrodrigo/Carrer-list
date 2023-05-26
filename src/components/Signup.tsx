@@ -1,22 +1,21 @@
 import styled from 'styled-components';
 import { ButtonForm, Card, Form, Input, Label, TitleForm } from './core/appStyled';
-import { FormEvent } from 'react';
-import { extractValues } from './core/commom';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import {setUsername} from '@src/redux/user';
-
-interface FormValues {
-    name: string;
-  }
+import { setUsername } from '@src/redux/user';
 
 const Signup = () => {
+    const [name, setName] = useState('');
     const dispatch = useDispatch();
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setName(event.target.value);
+    };
 
     const handleSubmit = (ev: FormEvent<HTMLFormElement>) => {
         ev.preventDefault();
-        const values: FormValues = extractValues(ev.target as HTMLFormElement);
-        localStorage.setItem('userName', values.name);
-        dispatch(setUsername(values.name));
+        localStorage.setItem('userName', name);
+        dispatch(setUsername(name));
     };
 
     return (
@@ -25,7 +24,16 @@ const Signup = () => {
                 <TitleForm>Welcome to CodeLeap network!</TitleForm>
                 <Form onSubmit={handleSubmit}>
                     <Label htmlFor="name">Please enter your username</Label>
-                    <Input type="text" id="name" name="name" aria-label="Please enter your username" placeholder="Jonh doe" required />
+                    <Input
+                        type="text"
+                        id="name"
+                        name="name"
+                        aria-label="Please enter your username"
+                        placeholder="Jonh doe"
+                        value={name}
+                        onChange={handleChange}
+                        required
+                    />
 
                     <ButtonForm type="submit">Enter</ButtonForm>
                 </Form>

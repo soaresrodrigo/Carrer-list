@@ -1,4 +1,4 @@
-import { ICreateArticle } from "@src/components/core/interfaces";
+import { CreateArticle } from "@src/components/core/interfaces";
 
 const headersConfig = () => {
     return new Headers({
@@ -30,7 +30,7 @@ export const listArticles = async (params?: []) => {
 
 }
 
-export const storeArticle = async (formData: ICreateArticle) => {
+export const storeArticle = async (formData: CreateArticle) => {
     const url: string = await prepareUrl();
 
     const data = await fetch(url, {

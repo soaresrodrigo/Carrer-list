@@ -4,12 +4,41 @@ import { Card } from './core/appStyled';
 import FormPost from './FormPost';
 import Post from './Post';
 import { APIArticles } from './core/interfaces';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getArticles } from '@src/redux/articles';
+import { setLoadingArticle } from '@src/redux/updateArticles';
 
-interface MainProps {
-    articles: APIArticles;
-}
+const Main = () => {
 
-const Main = ({ articles }: MainProps) => {
+    const dispatch = useDispatch();
+    const articles: APIArticles = useSelector((state: any) => state.articles.data);
+    const updateArticles = useSelector((state: any) => state.updateArticles);
+    const [limit, setLimit] = useState(3);
+
+    useEffect(() => {
+        dispatch(getArticles(limit));
+        dispatch(setLoadingArticle(false));
+    }, [updateArticles, limit]);
+
+
+    useEffect(() => {
+        function infiniteScroll() {
+            if (
+                window.innerHeight + document.documentElement.scrollTop ===
+                document.documentElement.offsetHeight
+            ) {
+                setLimit(prevLimit => prevLimit + 3);
+            }
+        }
+
+        window.addEventListener('scroll', infiniteScroll);
+
+        return () => {
+            window.removeEventListener('scroll', infiniteScroll);
+        };
+    }, [limit]);
+
 
     return (
         <Container>

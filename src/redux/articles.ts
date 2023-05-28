@@ -24,8 +24,8 @@ const setArticleUpdate = createAsyncSlice(updateArticleSliceConfig);
 const setArticleDelete = createAsyncSlice(deleteArticleSliceConfig);
 
 
-export const getArticles = () => {
-    return articles.asyncAction(listArticles());
+export const getArticles = (limit: number) => {
+    return articles.asyncAction(listArticles(limit));
 };
 
 export const createArticle = (formData: ImplementArticle) => {

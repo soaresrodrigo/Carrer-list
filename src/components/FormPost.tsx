@@ -78,8 +78,6 @@ const FormPost = ({ formType, currentArticle, handleCloseModal }: Props) => {
                 name="content"
                 value={content}
                 onChange={handleChangeContent}
-                rows={4}
-                cols={50}
                 placeholder="Content here"
             ></TextArea>
             {formType === 'post' ? (
@@ -101,6 +99,7 @@ const TextArea = styled.textarea`
     border-radius: 8px;
     padding: 8px 11px;
     margin-bottom: 16px;
+    height: 74px;
     resize: none;
 `;
 

@@ -12,16 +12,13 @@ const prepareUrl = async (params?: []) => {
     if (params) {
         Object.entries(params).forEach(([key, value]) => allParams.push(key + '=' + value));
     }
-
-    // const formattedParams = params ? '?' + allParams.join('&') : '';
-    // return `https://dev.codeleap.co.uk/careers/${formattedParams}`;
     return `https://dev.codeleap.co.uk/careers/`;
 }
 
 const url: string = await prepareUrl();
 
-export const listArticles = async () => {
-    const data = await fetch(url, {
+export const listArticles = async (limit: number) => {
+    const data = await fetch(url + `?limit=${limit}`, {
         method: 'get',
         headers: headersConfig()
     });

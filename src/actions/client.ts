@@ -1,8 +1,8 @@
-import { CreateArticle } from "@src/components/core/interfaces";
+import { ImplementArticle } from "@src/components/core/interfaces";
 
 const headersConfig = () => {
     return new Headers({
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
     })
 }
 
@@ -13,14 +13,14 @@ const prepareUrl = async (params?: []) => {
         Object.entries(params).forEach(([key, value]) => allParams.push(key + '=' + value));
     }
 
-    const formattedParams = params ? '?' + allParams.join('&') : '';
-    return `https://dev.codeleap.co.uk/careers/${formattedParams}`;
+    // const formattedParams = params ? '?' + allParams.join('&') : '';
+    // return `https://dev.codeleap.co.uk/careers/${formattedParams}`;
+    return `https://dev.codeleap.co.uk/careers/`;
 }
 
+const url: string = await prepareUrl();
 
-export const listArticles = async (params?: []) => {
-    const url: string = await prepareUrl(params);
-
+export const listArticles = async () => {
     const data = await fetch(url, {
         method: 'get',
         headers: headersConfig()
@@ -30,9 +30,7 @@ export const listArticles = async (params?: []) => {
 
 }
 
-export const storeArticle = async (formData: CreateArticle) => {
-    const url: string = await prepareUrl();
-
+export const storeArticle = async (formData: ImplementArticle) => {
     const data = await fetch(url, {
         method: 'post',
         headers: headersConfig(),
@@ -40,5 +38,25 @@ export const storeArticle = async (formData: CreateArticle) => {
     });
 
     return data.json();
-
 }
+
+export const editArticle = async (formData: ImplementArticle, articleId: number) => {
+    const data = await fetch(`${url}${articleId}/`, {
+        method: 'put',
+        headers: headersConfig(),
+        body: JSON.stringify(formData)
+    });
+
+    return data.json();
+}
+
+export const deleteArticle = async (articleId: number) => {
+    const data = await fetch(`${url}${articleId}/`, {
+        method: 'delete',
+        headers: headersConfig()
+    });
+
+    return data.json();
+};
+
+

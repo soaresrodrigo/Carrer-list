@@ -15,8 +15,8 @@ const Post = ({ article }: IPost) => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.user);
 
-    const handleOpenModal = (modal: modalType, id: number) => {
-        dispatch(setCurrentModal({ currentModal: modal, idArticle: id }));
+    const handleOpenModal = (modal: modalType) => {
+        dispatch(setCurrentModal({ currentModal: modal, currentArticle: article }));
     }
 
     return (
@@ -25,8 +25,8 @@ const Post = ({ article }: IPost) => {
                 <TitleArticle>{article.title}</TitleArticle>
                 {article.username === user.username && (
                     <ActionArticle>
-                        <IconAction src={DeleteIcon} onClick={() => handleOpenModal('delete', article.id)} />
-                        <IconAction src={EditIcon} onClick={() => handleOpenModal('edit', article.id)} />
+                        <IconAction src={DeleteIcon} onClick={() => handleOpenModal('delete')} />
+                        <IconAction src={EditIcon} onClick={() => handleOpenModal('edit')} />
                     </ActionArticle>
                 )}
             </HeaderArticle>

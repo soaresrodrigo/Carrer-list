@@ -1,15 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Article } from "@src/components/core/interfaces";
 
 export type modalType = 'delete' | 'edit' | null;
 
 export interface IModal {
     currentModal: modalType;
-    idArticle: number;
+    currentArticle?: Article | null;
 }
 
 const initialState: IModal = {
     currentModal: null,
-    idArticle: 0
+    currentArticle: null
 };
 
 const slice = createSlice({
@@ -18,7 +19,7 @@ const slice = createSlice({
     reducers: {
         setCurrentModal: (state, action: PayloadAction<IModal>) => {
             state.currentModal = action.payload.currentModal;
-            state.idArticle = action.payload.idArticle;
+            state.currentArticle = action.payload.currentArticle;
         }
     }
 })

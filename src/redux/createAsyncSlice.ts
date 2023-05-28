@@ -49,12 +49,12 @@ const createAsyncSlice = <T>(config: PropsConfig<T>) => {
     const {fetchStarted, fetchSuccess, fetchError} = slice.actions;
 
     const asyncAction: any = (payload: Promise<T>) => async(dispatch: AppDispatch) => {
-
         try {
             dispatch(fetchStarted());
             const data: T =  await payload;
             return dispatch(fetchSuccess(data))
         } catch (error) {
+            console.error(error);
             return dispatch(fetchError('Algo deu ruim'))
         }
     };

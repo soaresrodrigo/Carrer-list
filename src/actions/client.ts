@@ -6,16 +6,7 @@ const headersConfig = () => {
     })
 }
 
-const prepareUrl = async (params?: []) => {
-    const allParams: any = ['limit=3'];
-
-    if (params) {
-        Object.entries(params).forEach(([key, value]) => allParams.push(key + '=' + value));
-    }
-    return `https://dev.codeleap.co.uk/careers/`;
-}
-
-const url: string = await prepareUrl();
+const url: string = 'https://dev.codeleap.co.uk/careers/';
 
 export const listArticles = async (limit: number) => {
     const data = await fetch(url + `?limit=${limit}`, {

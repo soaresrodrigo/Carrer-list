@@ -1,3 +1,4 @@
+![Peek 28-05-2023 00-53](https://github.com/soaresrodrigo/codeleap-carrers/assets/15149046/3178c404-dc59-4dce-b706-d59426273116)
 This is a simple React application that performs basic CRUD (Create, Read, Update, Delete) functions. The application allows users to manage a collection of items through a user-friendly interface.
 
 ## Features
